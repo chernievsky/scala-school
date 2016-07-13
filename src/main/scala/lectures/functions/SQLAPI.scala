@@ -11,7 +11,7 @@ package lectures.functions
   * * * * * залогировать соединение
   * * * * * открыть соединение
   * * * * * выполнить SQL
-  * * * * * залогиовать результат
+  * * * * * залогировать результат
   *
   *
   * Обратите внимание на то, что композиция функций учит писать код в декларативном виде
@@ -32,7 +32,7 @@ object SQLAPI extends App {
 
   }
 
-  private def logParamter[T](prm: T): T  = {
+  private def logParameter[T](prm: T): T  = {
     println(prm)
     prm
   }
@@ -40,8 +40,7 @@ object SQLAPI extends App {
   val connection = (resource: String) => Connection(resource)
 
   def execute(resource: String, sql: String): String = {
-    ((logParamter[Connection] _ compose connection compose logParamter[String] andThen openConnection)(resource) andThen logParamter[String])(sql)
-
+    ((logParameter[Connection] _ compose connection compose logParameter[String] andThen openConnection)(resource) andThen logParameter[String])(sql)
   }
 
 
