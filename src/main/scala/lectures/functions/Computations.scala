@@ -41,7 +41,11 @@ object Computation extends App with Data {
 object CurriedComputation extends App with Data {
 
   def curriedComputation(filterData: String)(dataProducer: Array[String]): Array[String] =  {
+    //EMULATE HEAVY LOAD
+    Thread.sleep(10)
     val filterArray = filterData.split(" ")
+    //EMULATE HEAVY LOAD
+    Thread.sleep(100)
     dataProducer.filter(dataItem => filterArray.contains(dataItem))
   }
 
@@ -57,7 +61,11 @@ object CurriedComputation extends App with Data {
 object FunctionalComputation extends App with Data {
 
   def functionalComputation(filterData: String): (Array[String]) => Array[String] = {
+    //EMULATE HEAVY LOAD
+    Thread.sleep(10)
     val filterArray = filterData.split(" ")
+    //EMULATE HEAVY LOAD
+    Thread.sleep(100)
     (dataProducer) => dataProducer.filter(dataItem => filterArray.contains(dataItem))
   }
 
