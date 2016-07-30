@@ -1,6 +1,6 @@
 package lectures.operators
 
-import lectures.functions.Data
+import lectures.functions.{Data, Computation, CurriedComputation, FunctionalComputation}
 
 /**
   * В задачке из lectures.functions.Computations, мы реализовали
@@ -17,29 +17,31 @@ object EvaluateOptimization extends App with Data {
 
   val startTimestamp = System.currentTimeMillis()
 
+  //ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 Computation.computation(
+  for(i <- 1 to 100) {
+    Computation.computation(filterData, dataArray)
+  }
+  val afterCompTimestamp = System.currentTimeMillis()
+  println("elapsed time in Computation.computation " + (afterCompTimestamp - startTimestamp))
 
-  // ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 Computation.computation(
-  //    for(??? <- ???) {
-  //    print("elapsed time in Computation.computation" + (System.currentTimeMillis() - startTimestamp))
-  //   }
+  //ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 CurriedComputation.partiallyAppliedCurriedFunction(
+  for(i <- 1 to 100) {
+    CurriedComputation.partiallyAppliedCurriedFunction(dataArray)
+  }
+  val afterCurrCompTimestamp = System.currentTimeMillis()
+  println("elapsed time in CurriedComputation.computation " + (afterCurrCompTimestamp - afterCompTimestamp))
 
-  // ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 CurriedComputation.partiallyAppliedCurriedFunction(
-  //    for(??? <- ???) {
-  //     ???
-  //    print("elapsed time " + (System.currentTimeMillis() - startTimestamp))
-  //   }
+  //ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 FunctionalComputation.filterApplied
+  for(i <- 1 to 100) {
+    FunctionalComputation.filterApplied(dataArray)
+  }
+  val afterFuncCompTimestamp = System.currentTimeMillis()
+  println("elapsed time in FunctionalComputation.computation " + (afterFuncCompTimestamp - afterCurrCompTimestamp))
 
-  // ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 FunctionalComputation.filterApplied
-  //    for(??? <- ???) {
-  //     ???
-  //    print("elapsed time " + (System.currentTimeMillis() - startTimestamp))
-  //   }
+  //ВЫВЕСТИ РАЗНИЦУ В ПРОДОЛЖИТЕЛЬНОСТИ ВЫПОЛНЕНИЯ МЕЖДУ КАРРИРОВАННОЙ ВЕРСИЕЙ
+  //И ФУНКЦИОНАЛЬНОЙ
 
-  // ВЫВЕСТИ РАЗНИЦУ В ПРОДОЛЖИТЕЛЬНОСТИ ВЫПОЛНЕНИЯ МЕЖДУ КАРРИРОВАННОЙ ВЕРСИЕЙ
-  // И ФУНКЦИОНАЛЬНОЙ
-
-  //  val diff = ???
-
-  ///  print(s"Difference is about $diff milliseconds")
+  val diff = (afterCurrCompTimestamp - afterCompTimestamp) - (afterFuncCompTimestamp - afterCurrCompTimestamp)
+  println(s"Difference is about $diff milliseconds")
 }
 

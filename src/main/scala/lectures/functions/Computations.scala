@@ -38,7 +38,7 @@ object Computation extends App with Data {
   *
   * Какой тип имеет partiallyAppliedCurriedFunction - ?
   */
-object CurriedComputation extends App with Data {
+object CurriedComputation extends Data {
 
   def curriedComputation(filterData: String)(dataProducer: Array[String]): Array[String] =  {
     //EMULATE HEAVY LOAD
@@ -58,7 +58,7 @@ object CurriedComputation extends App with Data {
 /**
   * Допишите реализации методов так, что бы результат совпадал с предыдущими.
   */
-object FunctionalComputation extends App with Data {
+object FunctionalComputation extends Data {
 
   def functionalComputation(filterData: String): (Array[String]) => Array[String] = {
     //EMULATE HEAVY LOAD
