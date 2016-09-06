@@ -10,11 +10,12 @@ object MergeSortImpl extends App {
 
   def mergeSort(data: Seq[Int]): Seq[Int] = {
 
-    def merge(left: Seq[Int], right: Seq[Int]): Seq[Int] = {
+    def merge(res: Seq[Int], left: Seq[Int], right: Seq[Int]): Seq[Int] = {
       (left, right) match {
-        case (_, Nil)           => left
-        case (Nil, _)           => right
-        case (l :: ls, r :: rs) => if (r < l) r +: merge(left, rs) else l +: merge(ls, right)
+        //case (Nil, Nil)             => res
+        case (_, Nil)           => res ++ left
+        case (Nil, _)           => res ++ right
+        case (l :: ls, r :: rs) => if (r < l) merge(res :+ r, left, rs) else merge(res :+ l, ls, right)
       }
     }
 
@@ -25,7 +26,7 @@ object MergeSortImpl extends App {
         if (arr.head > arr.last) Seq(arr.last, arr.head) else arr
       } else {
         val (left, right) = arr.splitAt(arr.length / 2)
-        merge(sortHelper(left), sortHelper(right))
+        merge(Seq(), sortHelper(left), sortHelper(right))
       }
     }
 
@@ -35,4 +36,5 @@ object MergeSortImpl extends App {
   println(mergeSort(Seq(2, 5, 4, 7, 8, 1, 3, 6)))
   println(mergeSort(Seq()))
   println(mergeSort(Seq(1)))
+  println(mergeSort(Seq(3, 2, 1)))
 }

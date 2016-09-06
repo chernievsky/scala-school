@@ -51,15 +51,13 @@ object CouriersWithComprehension extends App {
 
   // какие адреса были обслужены
   def serveAddresses(addresses: List[Address], couriers: List[Courier]) = {
-    val courierSlots = couriers
-      .filter(_ => traffic().degree < 5)
-      .flatMap(c => (1 to c.canServe).map(i => c).toList)
-
-    val servedCount = courierSlots.foldLeft(0)((acc, c) => if (acc < addresses.length) acc + 1 else acc)
+    val servedCount = couriers.withFilter(_ => traffic().degree < 5).map {
+      _.canServe
+    }.sum
     addresses.take(servedCount)
   }
 
-  def traffic(): Traffic = new Traffic(Math.random() * 10)
+  def traffic(): Traffic = Traffic(Math.random() * 10)
 
   def printServedAddresses(addresses: List[Address], couriers: List[Courier]) =
     serveAddresses(addresses, couriers).foreach(a => println(a.postIndex))
