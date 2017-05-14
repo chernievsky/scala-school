@@ -92,8 +92,8 @@ case class BSTImpl(value: Int,
     aggRight
   }
 
-  override def toString(): String = {
-    val text = getText()
+  override def toString: String = {
+    val text = getText
     text.nodeLine + "\n" + text.linesBelow.mkString("\n")
   }
 
@@ -106,27 +106,27 @@ case class BSTImpl(value: Int,
       line.reverse.padTo(neededLength, ' ').reverse
   }
 
-  private def getText(): BSTText = {
+  private def getText: BSTText = {
     this match {
       case BSTImpl(_, None, None)       => BSTText(this.value.toString, List())
 
       case BSTImpl(v, Some(l), Some(r)) =>
-        val leftText = l.getText()
-        val rightText = r.getText()
+        val leftText = l.getText
+        val rightText = r.getText
         val nodeLine = spaces(leftText.nodeLine.length) + v + spaces(rightText.nodeLine.length)
         val bottomLine = leftText.nodeLine + spaces(v.toString.length) + rightText.nodeLine
         val zippedLines = leftText.linesBelow.zipAll(rightText.linesBelow, "", "").map({ case (ll, rl) => ll + padLeft(nodeLine.length - ll.length, rl) })
-        BSTText(nodeLine, bottomLine +: zippedLines)
+        BSTText(nodeLine, bottomLine :: zippedLines)
 
       case BSTImpl(v, Some(l), None)    =>
-        val leftText = l.getText()
+        val leftText = l.getText
         val nodeLine = spaces(leftText.nodeLine.length) + v
-        BSTText(nodeLine, (leftText.nodeLine +: leftText.linesBelow).map(line => line.padTo(nodeLine.length, ' ')))
+        BSTText(nodeLine, (leftText.nodeLine :: leftText.linesBelow).map(line => line.padTo(nodeLine.length, ' ')))
 
       case BSTImpl(v, None, Some(r))    =>
-        val rightText = r.getText()
+        val rightText = r.getText
         val nodeLine = v + spaces(rightText.nodeLine.length)
-        BSTText(nodeLine, (rightText.nodeLine +: rightText.linesBelow).map(line => padLeft(nodeLine.length, line)))
+        BSTText(nodeLine, (rightText.nodeLine :: rightText.linesBelow).map(line => padLeft(nodeLine.length, line)))
     }
   }
 
