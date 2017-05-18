@@ -27,7 +27,15 @@ object LazySchedulerView {
       */
     def lazySchedule(expirationTimeout: Long): SeqView[A, Seq[_]]  = {
       val i = c.instant().plusMillis(expirationTimeout)
-      ???
+      new SeqView[A, Seq[_]] {
+        override def iterator: Iterator[A] = if (c.instant.isBefore(i)) f.iterator else Seq().iterator
+
+        override def underlying: Seq[_] = if (c.instant.isBefore(i)) f else Seq()
+
+        override def apply(idx: Int): A = if (c.instant.isBefore(i)) f(idx) else Seq()(idx)
+
+        override def length: Int = if (c.instant.isBefore(i)) f.length else Seq().length
+      }
     }
   }
 }
